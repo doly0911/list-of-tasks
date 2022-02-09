@@ -7,10 +7,6 @@ import { nanoid } from "nanoid";
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks)
   
-
-  function toggleTaskCompleted(id) {
-    console.log(tasks[0])  }
-  
   const taskList = tasks.map(task => 
         <Todo 
             id={task.id}
@@ -18,6 +14,7 @@ function App(props) {
             completed={task.completed} 
             key={task.id}
             toggleTaskCompleted = {toggleTaskCompleted}
+            deleteTask = {deleteTask}
         />
         );
 
@@ -30,10 +27,23 @@ function App(props) {
       name: name,
       completed: false
     };
-    console.log("id creado: ", newTask.id)
     setTasks([...tasks, newTask]);      
   }
-  
+
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map(
+      task => {
+        if (id=== task.id){
+          return {...task, completed: !task.completed}
+        }
+        return task;
+      });
+      setTasks(updatedTasks)
+  }
+
+  function deleteTask(id){
+    console.log(id)
+  }
 
   return (
     <div className="todoapp stack-large" >
