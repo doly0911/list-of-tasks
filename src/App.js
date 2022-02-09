@@ -1,15 +1,28 @@
+import {useState} from "react";
 import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
 function App(props) {
-  const taskList = props.tasks?.map(task => 
-        <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} />);
+  const [tasks, setTasks] = useState(props.tasks)
+
+  const taskList = tasks.map(task => 
+        <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} />
+        );
+
+  function addTask(name){
+    const newTask = {
+      id: "id",
+      name: name,
+      completed: false
+    }
+    setTasks([...tasks, newTask]);      
+  }
+
   return (
     <div className="todoapp stack-large" >
       <h1>Aprendiendo React :)</h1>
-
-      <Form />
+      <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">
         <FilterButton nameFilter="All"/>
         <FilterButton nameFilter="Active"/>
@@ -23,8 +36,7 @@ function App(props) {
       <ul
       role="list"
       className="todo-list stack-large stack-exception"
-      aria-labelledby="list-heading"
-      >
+      aria-labelledby="list-heading">
         {taskList}
       </ul>
 
