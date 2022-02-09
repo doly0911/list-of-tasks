@@ -42,7 +42,10 @@ function App(props) {
   }
 
   function deleteTask(id){
-    console.log(id)
+    const tareasRestantes = tasks.filter(
+      task => id !== task.id
+    );
+    setTasks(tareasRestantes);
   }
 
   return (
